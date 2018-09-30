@@ -92,3 +92,33 @@ class Image:
         return Image(rp,ip)
     #MULTIPLICATION BLOCK END
     
+    #DIVISION BLOCK
+    def __truediv__(self,other): #When the image is divided by something + Both are images
+        if isinstance(other, Image):
+            return self.divide_images(self,other)
+        else:
+            return self.divide_image_by_normal(self,other)
+    def __rtruediv__(self,other): #When something is divided by the image
+        if isinstance(other, Image):
+            return self.divide_images(other,self)
+        else:
+            return self.divide_images(Image(other,0),self)
+    def __itruediv__(self,other): #When the image is divided by sth + Both are images
+        if isinstance(other, Image):
+            return self.divide_images(self,other)
+        else:
+            return self.divide_image_by_normal(self,other)
+    def divide_image_by_normal(self,i,n):
+        rp=i.rp/n
+        ip=i.ip/n
+        return Image(rp,ip)
+    def divide_images(self,i1,i2):
+        x=i1.rp
+        y=i1.ip
+        a=i2.rp
+        b=i2.ip
+        denom=a**2+b**2
+        num=Image(x*a+y*b,a*y-x*b)
+        return self.divide_image_by_normal(num,denom)
+    #DIVISION BLOCK END
+    
